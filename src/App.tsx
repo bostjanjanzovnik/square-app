@@ -1,26 +1,56 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react"
+import { Square } from "./components"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+interface ISquare {
+    x: number
+    y: number
+    size: number
 }
 
-export default App;
+export const calculateSquares = (width: number, height: number): ISquare[] => {
+    const squares: ISquare[] = []
+    let x = 0
+    let y = 0
+    let remainingWidth = width
+    let remainingHeight = height
+
+    while (remainingWidth > 0 && remainingHeight > 0) {
+        const size = Math.min(remainingWidth, remainingHeight)
+
+        squares.push({
+            x,
+            y,
+            size,
+        })
+
+        remainingWidth -= size
+
+        if (remainingWidth === 0) {
+            y += size
+            remainingWidth = width - x
+            remainingHeight = height - y
+        } else {
+            x += size
+        }
+    }
+
+    return squares
+}
+
+const App = () => {
+    const [squares, setSquares] = useState<ISquare[]>([])
+
+    useEffect(() => {
+        setSquares(calculateSquares(window.innerWidth, window.innerHeight))
+    }, [])
+
+    return (
+        <div>
+            {squares.map((square, index) => (
+                <Square key={index} x={square.x} y={square.y} size={square.size} />
+            ))}
+        </div>
+    )
+}
+
+export default App
