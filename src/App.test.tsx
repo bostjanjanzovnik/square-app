@@ -43,4 +43,22 @@ describe("<App />", () => {
         expect(squares[4].size).toEqual(10)
         expect(squares[5].size).toEqual(10)
     })
+
+    test("Square in 50 x 50 should have the right position", () => {
+        const squares = calculateSquares(50, 50)
+
+        expect(squares.length).toEqual(1)
+        expect(squares[0].x).toEqual(0)
+        expect(squares[0].y).toEqual(0)
+    })
+
+    test("Squares in 50 x 100 should have the right position", () => {
+        const squares = calculateSquares(50, 100)
+
+        expect(squares.length).toEqual(2)
+        expect(squares[0].x).toEqual(0)
+        expect(squares[0].y).toEqual(0)
+        expect(squares[1].x).toEqual(0)
+        expect(squares[1].y).toEqual(50)
+    })
 })

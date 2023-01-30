@@ -1,4 +1,4 @@
-# Squares App
+# Square App
 
 ## Get started
 
